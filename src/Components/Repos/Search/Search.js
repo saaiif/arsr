@@ -72,7 +72,7 @@ function Search({ usersData, fetchUsers }) {
                     {usersData.length > 0 ? (
                       <List usersData={usersData} query={query} />
                     ) : (
-                      "No Repos Find"
+                      "No Repos Found"
                     )}
                   </>
                 </Grid>

@@ -22,7 +22,7 @@ function List({ usersData, query }) {
           setrepoName(el.name);
         }}
       >
-        {el.name}
+        {el.name ? el.name : "No Repos Found"}
       </span>
     </li>
   ));

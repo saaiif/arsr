@@ -16,12 +16,11 @@ function Issue({ repoIssues, query, reponame }) {
       .then((res) => setComments(res.data));
   }, [number]);
 
-  let check = () => {
-    setTimeout(() => {
-      if (comments.length === 0) {
-        return alert("No Comments");
-      }
-    }, 1000);
+  console.log(repoIssues, "repoIssues");
+  const check = (comments) => {
+    if (comments == 0) {
+      alert("No Comments Found");
+    }
   };
 
   let userRepoName =
@@ -31,7 +30,7 @@ function Issue({ repoIssues, query, reponame }) {
             <span
               onClick={() => {
                 setNumber(el.number);
-                check();
+                check(el.comments);
               }}
             >
               {el.url}
