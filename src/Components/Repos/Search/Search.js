@@ -1,12 +1,21 @@
 import React, { useState } from "react";
-import { Button, TextField } from "@material-ui/core";
+import {
+  Button,
+  TextField,
+  Box,
+  Grid,
+  Divider,
+  Typography,
+} from "@material-ui/core";
 import { connect } from "react-redux";
 import { fetchUsers } from "./../../../redux/repo/repoActions";
 import List from "../List/List";
 
+import useStyles from "./Style";
+
 function Search({ usersData, fetchUsers }) {
   const [query, setQuery] = useState("");
-
+  const classes = useStyles();
   const handleClick = (e) => {
     e.preventDefault();
     fetchUsers(query);
@@ -17,17 +26,72 @@ function Search({ usersData, fetchUsers }) {
   );
 
   return (
-    <>
-      <form onSubmit={handleClick}>
-        <TextField value={query} onChange={(e) => setQuery(e.target.value)} />
-        <Button type='submit'>Search repository</Button>
-      </form>
-      {usersData.length > 0 ? (
-        <List usersData={usersData} query={query} />
-      ) : (
-        "No Repos Find"
-      )}
-    </>
+    // <>
+    //   <form onSubmit={handleClick}>
+    //     <TextField value={query} onChange={(e) => setQuery(e.target.value)} />
+    //     <Button type='submit'>Search repository</Button>
+    //   </form>
+    //   {usersData.length > 0 ? (
+    //     <List usersData={usersData} query={query} />
+    //   ) : (
+    //     "No Repos Find"
+    //   )}
+    // </>
+    <Box>
+      <Box className={classes.mainCon}>
+        <Box className={classes.registermain}>
+          <Box className={classes.header}>
+            <Box display='flex' alignItems='center'>
+              <Typography
+                style={{
+                  fontSize: "25px",
+                  color: "#fb7401",
+                }}
+              >
+                ARSR Frontend Task
+              </Typography>
+            </Box>
+          </Box>
+          <Box className={classes.container}>
+            <Box className={classes.registerBox}>
+              <Grid item container xs={12}>
+                <Grid item lg={12} sm={12} md={12} xs={12} spacing={1}>
+                  <>
+                    <form onSubmit={handleClick} className={classes.radio}>
+                      <TextField
+                        variant='outlined'
+                        label='Username'
+                        InputProps={{
+                          className: classes.InputField,
+                        }}
+                        InputLabelProps={{
+                          className: classes.InputFieldLabel,
+                        }}
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                      />
+                      <Button
+                        variant='contained'
+                        className={classes.searchButton}
+                        type='submit'
+                      >
+                        Search repository
+                      </Button>
+                    </form>
+                    <Divider className={classes.userTopDivider} />
+                    {usersData.length > 0 ? (
+                      <List usersData={usersData} query={query} />
+                    ) : (
+                      "No Repos Find"
+                    )}
+                  </>
+                </Grid>
+              </Grid>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

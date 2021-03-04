@@ -11,7 +11,6 @@ function App(props) {
     <Provider store={store}>
       <Switch>
         <div className='App'>
-          <h1>Saif</h1>
           <Route path='/' component={Search} exact />
           <Route path='/repoissues' component={Issues} {...props} />
           {/* <Issues /> */}

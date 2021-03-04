@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
+import useStyles from "./Style";
 function Issue({ repoIssues, query, reponame }) {
+  const classes = useStyles();
   const [number, setNumber] = useState();
   const [comments, setComments] = useState([]);
 
@@ -13,13 +16,22 @@ function Issue({ repoIssues, query, reponame }) {
       .then((res) => setComments(res.data));
   }, [number]);
 
+  let check = () => {
+    setTimeout(() => {
+      if (comments.length == 0) {
+        return alert("No Comments");
+      }
+    }, 1000);
+  };
+
   let userRepoName =
     repoIssues !== undefined
       ? repoIssues.map((el) => (
-          <li key={el.id}>
+          <li key={el.id} className={classes.repoName}>
             <span
               onClick={() => {
                 setNumber(el.number);
+                check();
               }}
             >
               {el.url}
@@ -31,7 +43,7 @@ function Issue({ repoIssues, query, reponame }) {
   let userIssueDetails =
     repoIssues !== undefined
       ? repoIssues.map((el) => (
-          <li key={el.id}>
+          <li key={el.id} className={classes.repoName}>
             <span
               onClick={() => {
                 setNumber(el.number);
@@ -46,7 +58,7 @@ function Issue({ repoIssues, query, reponame }) {
   let userComments =
     repoIssues !== undefined
       ? comments.map((el) => (
-          <li key={el.id}>
+          <li key={el.id} className={classes.repoName}>
             <span>{el.body}</span>
           </li>
         ))
@@ -55,8 +67,15 @@ function Issue({ repoIssues, query, reponame }) {
   let AddComments =
     repoIssues !== undefined
       ? comments.map((el) => (
-          <li key={el.id}>
-            <a href={el.html_url} target='_blank'>
+          <li
+            key={el.id}
+            style={{ margin: "30px auto", display: "block", width: "100%" }}
+          >
+            <a
+              href={el.html_url}
+              target='_blank'
+              className={classes.addComments}
+            >
               Add Comment
             </a>
           </li>
@@ -68,14 +87,23 @@ function Issue({ repoIssues, query, reponame }) {
       {comments.length > 0 ? (
         <div>
           {" "}
-          <ul>Comments:{userComments}</ul>
+          <ul>
+            <span className={classes.title}>Issue Details :</span>
+            {userIssueDetails}
+          </ul>
+          <ul>
+            <span className={classes.title}>Comments:</span>
+            {userComments}
+          </ul>
           <ul>{AddComments}</ul>
         </div>
       ) : (
         <div>
           {" "}
-          <ul>Issue Details :{userIssueDetails}</ul>
-          <ul>Issue Url: {userRepoName}</ul>
+          <ul>
+            <span className={classes.title}>Issue Url: </span>
+            {userRepoName}
+          </ul>
         </div>
       )}
     </>
