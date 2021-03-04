@@ -43,13 +43,13 @@ function List({ usersData, issueData, query }) {
           <Issue repoIssues={issues} reponame={reponame} query={query} />
         </div>
       ) : (
-        <Box >
+        <Box>
           {usersData.loading ? (
             <h1>Loading..</h1>
           ) : usersData.error ? (
             <h2>{userError}</h2>
           ) : (
-            <ul >{userRepoName}</ul>
+            <ul>{userRepoName}</ul>
           )}
         </Box>
       )}

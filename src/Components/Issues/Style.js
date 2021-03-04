@@ -20,7 +20,7 @@ export default makeStyles((theme) => ({
     marginTop: "20px",
     background: "transparent",
     border: "1px solid #fb7401",
-    padding:'10px',
-    borderRadius:'4px'
+    padding: "10px",
+    borderRadius: "4px",
   },
 }));
