@@ -26,17 +26,6 @@ function Search({ usersData, fetchUsers }) {
   );
 
   return (
-    // <>
-    //   <form onSubmit={handleClick}>
-    //     <TextField value={query} onChange={(e) => setQuery(e.target.value)} />
-    //     <Button type='submit'>Search repository</Button>
-    //   </form>
-    //   {usersData.length > 0 ? (
-    //     <List usersData={usersData} query={query} />
-    //   ) : (
-    //     "No Repos Find"
-    //   )}
-    // </>
     <Box>
       <Box className={classes.mainCon}>
         <Box className={classes.registermain}>
@@ -53,11 +42,11 @@ function Search({ usersData, fetchUsers }) {
             </Box>
           </Box>
           <Box className={classes.container}>
-            <Box className={classes.registerBox}>
+            <Box className={classes.searchBox}>
               <Grid item container xs={12}>
                 <Grid item lg={12} sm={12} md={12} xs={12} spacing={1}>
                   <>
-                    <form onSubmit={handleClick} className={classes.radio}>
+                    <form onSubmit={handleClick} className={classes.form}>
                       <TextField
                         variant='outlined'
                         label='Username'
@@ -74,6 +63,7 @@ function Search({ usersData, fetchUsers }) {
                         variant='contained'
                         className={classes.searchButton}
                         type='submit'
+                        disabled={!query ? true : false}
                       >
                         Search repository
                       </Button>

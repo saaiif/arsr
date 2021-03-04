@@ -2,16 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Issue from "../../Issues/Issue";
 import useStyles from "./Style";
-import {
-  Button,
-  TextField,
-  Box,
-  Grid,
-  Divider,
-  Typography,
-} from "@material-ui/core";
+import { Box } from "@material-ui/core";
 
-function List({ usersData, issueData, query }) {
+function List({ usersData, query }) {
   const classes = useStyles();
   const [reponame, setrepoName] = useState("");
   const [issues, setIssues] = useState([]);

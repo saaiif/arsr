@@ -18,7 +18,7 @@ function Issue({ repoIssues, query, reponame }) {
 
   let check = () => {
     setTimeout(() => {
-      if (comments.length == 0) {
+      if (comments.length === 0) {
         return alert("No Comments");
       }
     }, 1000);
@@ -74,6 +74,7 @@ function Issue({ repoIssues, query, reponame }) {
             <a
               href={el.html_url}
               target='_blank'
+              rel='noreferrer'
               className={classes.addComments}
             >
               Add Comment

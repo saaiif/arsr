@@ -6,33 +6,7 @@ export default makeStyles((theme) => ({
     backgroundColor: "#142134",
     minHeight: "100vh",
   },
-  root: {
-    "& .MuiFormControlLabel-root": {
-      marginRight: "10px",
-    },
-    "& .MuiDialog-paperWidthSm": {
-      maxWidth: "600px",
-      width: "100%",
-      height: "460px",
-      backgroundColor: "#142134",
-    },
-    "& .MuiMenuItem-root": {
-      color: "#bababa",
-    },
-    "& .MuiDialog-root": {
-      backgroundColor: "rgba(20, 30, 44, 0.1) !important",
-      color: "#bababa",
-    },
-    "& .MuiInputBase-input": {
-      color: "#fff",
-    },
-    "& .MuiIconButton-root": {
-      color: "#fff",
-    },
-    "& .MuiFormLabel-root": {
-      color: "#fff",
-    },
-  },
+
   registermain: {
     display: "flex",
     justifyContent: "center",
@@ -49,8 +23,6 @@ export default makeStyles((theme) => ({
     position: "relative",
     width: "100%",
     maxWidth: "980px",
-    // height: "100%",
-    // marginTop: "10px",
   },
 
   container: {
@@ -67,47 +39,25 @@ export default makeStyles((theme) => ({
     margin: "15px 10px ",
   },
 
-  registerFormContain: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "column",
-    /* align-items: flex-start, */
-    justifyContent: "center",
-    height: "100%",
-    margin: "0px 10px 0px 10px",
-    paddingLeft: "30px",
-    [theme.breakpoints.down("sm")]: {
-      paddingLeft: 0,
-    },
-  },
-  registerBox: {
+  searchBox: {
     width: "100%",
     [theme.breakpoints.down("sm")]: {
       width: "100%",
     },
   },
 
-  radio: {
+  form: {
     display: "flex ",
     alignItems: "center ",
     justifyContent: "center",
     padding: "15px 0px ",
-    cursor: "pointer",
     color: "#fff ",
   },
   divider: {
     color: "#fff ",
     border: "0.5px solid #fff ",
   },
-  radiomain: {
-    backgroundColor: "transparent",
-    minHeight: 300,
-    height: "100% ",
-    color: "#fff ",
-  },
-  userDivider: {
-    background: "#142134",
-  },
+
   userTopDivider: {
     background: "#fb7401",
   },
@@ -123,7 +73,6 @@ export default makeStyles((theme) => ({
     backgroundColor: "#fb7401",
     height: "48px",
     marginLeft: "10px",
-    // maxWidth: "200px",
     color: "#fff",
     textTransform: "capitalize",
     "&:hover": {
@@ -131,7 +80,7 @@ export default makeStyles((theme) => ({
       color: "#fff",
     },
     "&:disabled": {
-      backgroundColor: "rgba(251, 116, 1, 0.1)",
+      backgroundColor: "rgba(251, 116, 1, 0.4)",
       color: "rgba(255, 255, 255, 0.6)",
     },
     [theme.breakpoints.down("sm")]: {

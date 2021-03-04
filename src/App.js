@@ -1,21 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Provider } from "react-redux";
 import "./App.css";
 import Search from "./Components/Repos/Search/Search";
 import store from "./redux/store";
-import Issues from "./Components/Issues/Issue";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-function App(props) {
+function App() {
   return (
     <Provider store={store}>
-      <Switch>
-        <div className='App'>
-          <Route path='/' component={Search} exact />
-          <Route path='/repoissues' component={Issues} {...props} />
-          {/* <Issues /> */}
-        </div>
-      </Switch>
+      <div className='App'>
+        <Search />
+      </div>
     </Provider>
   );
 }
