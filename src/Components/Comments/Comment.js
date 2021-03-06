@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { fetchComment } from "../../redux";
-import { Link, Redirect } from "react-router-dom";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { Link } from "react-router-dom";
 
-class Issue extends Component {
+class Comment extends Component {
   constructor(props) {
     super(props);
 
@@ -26,31 +25,43 @@ class Issue extends Component {
   }
 
   render() {
-    const { issuesData } = this.props;
+    const { issuesData, commentsData } = this.props;
 
-    const main =
-      this.props.location && this.props.location.state.main
-        ? this.props.location.state.main
-        : { a: "saaiif", b: "admin" };
+    let userComments =
+      commentsData.length > 0 ? (
+        commentsData.map((el) => (
+          <li key={el.id} className='repoName'>
+            <span>{el.body}</span>
+          </li>
+        ))
+      ) : (
+        <h4 style={{ marginRight: "10px" }}> No Comments found</h4>
+      );
 
-    if (this.state.comments === true) {
-      return <Redirect to='/comment' />;
-    }
-
-    let userRepoName =
+    let userIssueDetails =
       issuesData.length > 0
         ? issuesData.map((el) => (
             <li key={el.id} className='repoName'>
-              <span
-                onClick={() =>
-                  this.handleClickComment(main.a, main.b, el.number)
-                }
-              >
-                {el.url}
-              </span>
+              <span>{el.title}</span>
             </li>
           ))
-        : "No Issues Found";
+        : "Saiffff";
+
+    let AddCommUrl =
+      issuesData.length > 0 ? commentsData.map((el) => el.html_url) : "Saiffff";
+
+    let AddComments = (
+      <li style={{ margin: "30px auto", display: "block", width: "100%" }}>
+        <a
+          href={AddCommUrl}
+          target='_blank'
+          rel='noreferrer'
+          className='addComments'
+        >
+          Add Comment
+        </a>
+      </li>
+    );
     return (
       <div>
         <div>
@@ -73,11 +84,15 @@ class Issue extends Component {
               </div>
               <div className='container'>
                 <div>
-                  {" "}
                   <ul>
-                    <span className='title'>Issue Url: </span>
-                    {userRepoName}
+                    <span className='title'>Issue Details :</span>
+                    {userIssueDetails}
                   </ul>
+                  <ul>
+                    <span className='title'>Comments:</span>
+                    {userComments}
+                  </ul>
+                  <ul>{AddComments}</ul>
                 </div>
               </div>
             </div>
@@ -91,12 +106,8 @@ class Issue extends Component {
 const mapStateToProps = (state) => {
   return {
     issuesData: state.issue.issues,
-  };
-};
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchComment: (a, b, c) => dispatch(fetchComment(a, b, c)),
+    commentsData: state.comment.comments,
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Issue);
+export default connect(mapStateToProps, null)(Comment);

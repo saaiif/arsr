@@ -1,53 +1,83 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Issue from "../../Issues/Issue";
-import useStyles from "./Style";
-import { Box } from "@material-ui/core";
+import React, { Component } from "react";
 
-function List({ usersData, query }) {
-  const classes = useStyles();
-  const [reponame, setrepoName] = useState("");
-  const [issues, setIssues] = useState([]);
+import { connect } from "react-redux";
+import { fetchIssue } from "./../../../redux/issue/issueActions";
+import { Redirect } from "react-router";
 
-  useEffect(() => {
-    axios
-      .get(`https://api.github.com/repos/${query}/${reponame}/issues`)
-      .then((res) => setIssues(res.data));
-  }, [reponame]);
+class List extends Component {
+  constructor(props) {
+    super(props);
 
-  let userRepoName = usersData.map((el) => (
-    <li key={el.id} className={classes.repoName}>
-      <span
-        onClick={() => {
-          setrepoName(el.name);
-        }}
-      >
-        {el.name ? el.name : "No Repos Found"}
-      </span>
-    </li>
-  ));
+    this.state = {
+      list: false,
+      value: "",
+    };
 
-  let userError = usersData.error;
+    this.handleClick = this.handleClick.bind(this);
+  }
 
-  return (
-    <>
-      {issues.length > 0 ? (
-        <div>
-          <Issue repoIssues={issues} reponame={reponame} query={query} />
-        </div>
-      ) : (
-        <Box>
-          {usersData.loading ? (
-            <h1>Loading..</h1>
-          ) : usersData.error ? (
-            <h2>{userError}</h2>
-          ) : (
-            <ul>{userRepoName}</ul>
-          )}
-        </Box>
-      )}
-    </>
-  );
+  handleClick(a, b) {
+    const { fetchIssue } = this.props;
+    fetchIssue(a, b);
+
+    let main = { a, b };
+
+    this.setState(() => ({
+      list: true,
+      value: main,
+    }));
+  }
+
+  render() {
+    const { usersData } = this.props;
+    const { list, value } = this.state;
+
+    if (list === true) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/issue",
+            state: { main: value },
+          }}
+        />
+      );
+    }
+
+    let userRepoName = usersData.map((el) => (
+      <li key={el.id} className='repoName'>
+        <span
+          onClick={() => {
+            this.handleClick(el.owner.login, el.name);
+          }}
+        >
+          {el.name ? el.name : "No Repos Found"}
+        </span>
+      </li>
+    ));
+
+    return (
+      <div>
+        {usersData.loading ? (
+          <h1>Loading..</h1>
+        ) : usersData.error ? (
+          <h2>{usersData.error}</h2>
+        ) : (
+          <ul>{userRepoName}</ul>
+        )}
+      </div>
+    );
+  }
 }
 
-export default List;
+const mapStateToProps = (state) => {
+  return {
+    issuesData: state.issue.issues,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchIssue: (a, b) => dispatch(fetchIssue(a, b)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(List);

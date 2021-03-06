@@ -1,93 +1,88 @@
-import React, { useState } from "react";
-import {
-  Button,
-  TextField,
-  Box,
-  Grid,
-  Divider,
-  Typography,
-} from "@material-ui/core";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchUsers } from "./../../../redux/repo/repoActions";
 import List from "../List/List";
 
-import useStyles from "./Style";
+import "./Search.css";
 
-function Search({ usersData, fetchUsers }) {
-  const [query, setQuery] = useState("");
-  const classes = useStyles();
-  const handleClick = (e) => {
+class Search extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: "",
+    };
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
     e.preventDefault();
-    fetchUsers(query);
+    const { fetchUsers } = this.props;
+    fetchUsers(this.state.query);
+
+    console.log(this.state.query);
+  }
+
+  handleChange = (event) => {
+    this.setState({ query: event.target.value });
   };
-  console.log(
-    usersData.map((el) => el.name),
-    "usersData"
-  );
 
-  return (
-    <Box>
-      <Box className={classes.mainCon}>
-        <Box className={classes.registermain}>
-          <Box className={classes.header}>
-            <Box display='flex' alignItems='center'>
-              <Typography
-                style={{
-                  fontSize: "25px",
-                  color: "#fb7401",
-                }}
-              >
-                ARSR Frontend Task
-              </Typography>
-            </Box>
-          </Box>
-          <Box className={classes.container}>
-            <Box className={classes.searchBox}>
-              <Grid item container xs={12}>
-                <Grid item lg={12} sm={12} md={12} xs={12} spacing={1}>
-                  <>
-                    <form onSubmit={handleClick} className={classes.form}>
-                      <TextField
-                        variant='outlined'
-                        label='Username'
-                        InputProps={{
-                          className: classes.InputField,
-                        }}
-                        InputLabelProps={{
-                          className: classes.InputFieldLabel,
-                        }}
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                      />
-                      <Button
-                        variant='contained'
-                        className={classes.searchButton}
-                        type='submit'
-                        disabled={!query ? true : false}
-                      >
-                        Search repository
-                      </Button>
-                    </form>
-                    <Divider className={classes.userTopDivider} />
-                    {usersData.length > 0 ? (
-                      <List usersData={usersData} query={query} />
-                    ) : (
-                      "No Repos Found"
-                    )}
-                  </>
-                </Grid>
-              </Grid>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
-  );
+  render() {
+    const { query } = this.state;
+    const { usersData } = this.props;
+    return (
+      <div>
+        <div className='mainCon'>
+          <div className='registermain'>
+            <div className='header'>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <h1
+                  style={{
+                    fontSize: "25px",
+                    color: "#fb7401",
+                  }}
+                >
+                  ARSR Frontend Task - Repo Name
+                </h1>
+              </div>
+            </div>
+            <div className='container'>
+              <div className='searchBox'>
+                <div>
+                  <form onSubmit={this.handleClick} className='form'>
+                    <input
+                      className='InputField'
+                      value={query}
+                      onChange={this.handleChange}
+                      placeholder='Username'
+                    />
+                    <button
+                      className='searchButton'
+                      type='submit'
+                      disabled={!query ? true : false}
+                    >
+                      Search repository
+                    </button>
+                  </form>
+                </div>
+              </div>
+              {usersData.length > 0 ? (
+                <>
+                  <List usersData={usersData} query={query} />
+                </>
+              ) : (
+                "No Repos Found"
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
-
 const mapStateToProps = (state) => {
   return {
-    usersData: state.users,
+    usersData: state.user.users,
   };
 };
 const mapDispatchToProps = (dispatch) => {

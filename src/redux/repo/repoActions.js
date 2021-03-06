@@ -21,6 +21,7 @@ export const fetchUserFailure = (error) => {
 };
 
 export const fetchUsers = (query) => {
+  console.log(`https://api.github.com/users/${query}/repos`);
   return function (dispatch) {
     dispatch(fetchUserRequest());
     axios
